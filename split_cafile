@@ -1,0 +1,12 @@
+#!/bin/bash
+
+[ $# -ne 1 ] && exit 1
+
+awk '/BEGIN CERTIFICATE/,/END CERTIFICATE/ \
+{ if(/BEGIN/) { f=sprintf("ext."var++); } print >> f }' $1
+
+for F in ext.*
+do
+  HASH=`openssl x509 -in $F -noout -hash`
+  [ $? -eq 0 ] && [ ! -f $HASH ] && mv $F $HASH
+done
