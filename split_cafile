@@ -8,5 +8,16 @@ awk '/BEGIN CERTIFICATE/,/END CERTIFICATE/ \
 for F in ext.*
 do
   HASH=`openssl x509 -in $F -noout -hash`
-  [ $? -eq 0 ] && [ ! -f $HASH ] && mv $F $HASH
+  [ $? -eq 0 ] && [ ! -f $HASH ] && mv $F $HASH || mv $F $HASH.$F
 done
+
+
+### split all certificate.pem and extract directory.
+# for F in *.pem; do mkdir `basename ${F/cacert-//} .pem`; done
+# for D in 20*; do (cd $D; ../split_cafile ../cacert-${D}.pem); done
+
+### add or delete certificates
+# diff -u <(ls 2016-01-20/) <(ls 2016-04-20/)
+
+### list all subjects and hash
+# for F in *; do openssl x509 -noout -subject -hash -in $F|xargs; done | sort
