@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+# perl >= 5.10
+#
+# GNU date: date '+%Y-%m' -d "$(date '+%Y-%m-15') -1 month"
+
+use Time::Piece;
+
+my $n = Time::Piece->strptime(localtime->strftime('%Y-%m-15'), '%Y-%m-%d');
+my $p = $n->add_months(-1);
+print $p->strftime( $ARGV[0] ? $ARGV[0] : "%Y-%m") . "\n";
