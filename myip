@@ -5,7 +5,8 @@
 
 if [ "$1" == "" ]
 then
-        curl https://ipinfo.io/ip
+#	curl https://ipinfo.io/ip
+	curl -s http://checkip.amazonaws.com/
 elif [ "$1" == "-a" ]
 then
         curl https://ipinfo.io/
